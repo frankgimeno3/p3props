@@ -5,18 +5,20 @@ import { ddbDocClient } from "@/utils/dbconfig";
 
 export interface UserItem {
   elementId: string;
+  email:string;
   numeroAgente: string;
   nombreAgente: string;
   isActive: boolean;
   userType: string;
 }
 
-export const addUser = async (numeroAgente: string, nombreAgente:string) => {
+export const addUser = async (numeroAgente: string, nombreAgente:string, email:string) => {
   try {
     const params = {
       TableName: "crmTable",
       Item: {
         elementId: `${Math.floor(Math.random() * 10000)}`,
+        email:email,
         numeroAgente: numeroAgente,
         nombreAgente: nombreAgente,
         isActive:true,

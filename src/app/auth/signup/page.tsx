@@ -13,6 +13,7 @@ export default function SignUpPage() {
   const handleRedirection = useRedirection();
 
   // Campos adicionales para DynamoDB
+  const [email, setEmail] = useState("");
   const [numeroAgente, setNumeroAgente] = useState("");
   const [nombreAgente, setNombreAgente] = useState("");
 
@@ -25,7 +26,7 @@ export default function SignUpPage() {
       await dispatch(formData);
 
       // Crear usuario en DynamoDB con los campos adicionales
-      await addUser(numeroAgente, nombreAgente);
+      await addUser(numeroAgente, nombreAgente, email);
 
       // Redirigir después de la creación exitosa
       handleRedirection("/");
@@ -52,8 +53,10 @@ export default function SignUpPage() {
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="email"
                 type="email"
-                name="email" // Asegúrate de que coincida con los valores usados en FormData
+                name="email" 
                 placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>

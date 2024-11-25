@@ -23,7 +23,6 @@ const Home: FC<HomeProps> = ({ }) => {
   
   // Función para agregar un producto
   const addProduct = () => {
-
     setProducts([
       ...products,
       { productId: '', productComments: '', productPrice: '' }
