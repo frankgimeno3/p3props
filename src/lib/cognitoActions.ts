@@ -20,8 +20,7 @@ export async function handleSignUp(
         userAttributes: {
           email: String(formData.get("email")),
         },
-        // optional
-        autoSignIn: true,
+         autoSignIn: true,
       },
     });
   } catch (error) {
@@ -72,7 +71,7 @@ export async function handleSignIn(
   prevState: string | undefined,
   formData: FormData
 ) {
-  let redirectLink = "/dashboard";
+  let redirectLink = "/home";
   try {
     const { isSignedIn, nextStep } = await signIn({
       username: String(formData.get("email")),

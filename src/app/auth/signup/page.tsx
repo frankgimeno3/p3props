@@ -23,13 +23,15 @@ export default function SignUpPage() {
 
     try {
       // Crear usuario en Cognito
-      await dispatch(formData);
+      const cognitoResult = await dispatch(formData);
 
       // Crear usuario en DynamoDB con los campos adicionales
       await addUser(numeroAgente, nombreAgente, email);
 
       // Redirigir después de la creación exitosa
-      handleRedirection("/");
+      if (!errorMessage) {
+        handleRedirection("/");
+      }
     } catch (error) {
       console.error("Error al crear el usuario:", error);
     }
@@ -53,7 +55,7 @@ export default function SignUpPage() {
                 className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
                 id="email"
                 type="email"
-                name="email" 
+                name="email"
                 placeholder="Enter your email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
