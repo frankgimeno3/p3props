@@ -39,7 +39,7 @@ const Propuestas: FC<PropuestasProps> = () => {
       {/* Tabla de Resultados */}
       <div className="bg-white p-4 shadow-md rounded-md">
         <p className="text-gray-700 mb-4">
-          Aquí debe ir una tabla con columnas "num cliente", "nombre agente", "nombre propuesta", eliminar
+          Aquí debe ir una tabla con columnas num cliente", nombre agente, nombre propuesta, eliminar
         </p>
         <table className="w-full table-auto border-collapse">
           <thead>
