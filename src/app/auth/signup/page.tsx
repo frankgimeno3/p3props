@@ -5,13 +5,16 @@ import { handleSignUp } from "@/lib/cognitoActions";
 import { addUser } from "@/lib/userActions/addUser"; // Importamos la función para DynamoDB
 import { useFormState, useFormStatus } from "react-dom";
 import { Button } from "./button";
-import { useRedirection } from "@/utils/routingUtils";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const [errorMessage, dispatch] = useFormState(handleSignUp, undefined);
   const { pending } = useFormStatus();
-  const handleRedirection = useRedirection();
-
+  
+  const router = useRouter();
+  const handleRedirection = (direction: string) => {
+   router.push(direction);
+ };
   // Campos adicionales para DynamoDB
   const [email, setEmail] = useState("");
   const [numeroAgente, setNumeroAgente] = useState("");

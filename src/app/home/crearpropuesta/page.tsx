@@ -1,7 +1,7 @@
 "use client"
 import React, { FC, useState } from 'react';
  import { addPropuesta, Product } from '@/lib/propuestas/addPropuesta';
- import { useFormState, useFormStatus } from 'react-dom';
+ import { useFormStatus } from 'react-dom';
 import { Button } from '@/app/auth/signup/button';
 
 interface CrearPropuestaProps {}

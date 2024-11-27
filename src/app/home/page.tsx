@@ -1,12 +1,17 @@
-import { useRedirection } from '@/utils/routingUtils';
 import React, { FC } from 'react';
+import { useRouter } from "next/navigation";
+
 
 interface HomeProps {
 
 }
 
 const Home: FC<HomeProps> = ({ }) => {
-  const handleRedirection = useRedirection();
+  
+   const router = useRouter();
+   const handleRedirection = (direction: string) => {
+    router.push(direction);
+  };
 
   return (
     <div className='p-5'>
