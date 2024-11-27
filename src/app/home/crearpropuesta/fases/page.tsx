@@ -1,7 +1,8 @@
+"use client"
 import React, { FC, useState } from 'react';
 import { addPropuesta, Product } from '@/lib/propuestas/addPropuesta';
 import { useFormState, useFormStatus } from 'react-dom';
-import { Button } from '@/app/auth/signup/button';
+// import { Button } from '@/app/auth/signup/button';
 import Fase1 from './Fase1';
 import Fase2 from './Fase2';
 import Fase3 from './Fase3';
