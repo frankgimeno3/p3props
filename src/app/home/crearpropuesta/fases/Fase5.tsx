@@ -48,7 +48,8 @@ const Fase5: FC<Fase5Props> = ({ setFase, isExchange, itemsArray, setItemsArray 
   };
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto flex flex-col">
+      
       <table className="min-w-full bg-white border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-100">

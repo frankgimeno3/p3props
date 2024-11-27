@@ -20,7 +20,7 @@ const Fase3: FC<Fase3Props> = ({ setFase, setLang, setIsExchange }) => {
         setFase(nextfase);
        };
     return (
-        <div>
+        <div className='flex flex-col'>
             <label>
                 <p>Selecciona el idioma de la propuesta</p>
                 <select onChange={handleLanguageChange}>

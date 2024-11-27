@@ -10,6 +10,7 @@ import Fase4 from './Fase4';
 import Fase5 from './Fase5';
 import Fase6 from './Fase6';
 import Fase7 from './Fase7';
+import FasesNav from './fasesNav';
 
 interface CrearPropuestaProps {}
 
@@ -56,11 +57,13 @@ const CrearPropuesta: FC<CrearPropuestaProps> = ({}) => {
     };
 
     return (
-        <div>
+        <div className='flex flex-col   min-h-screen' style={{ backgroundColor: "#0f0f10" }}>
+            <FasesNav fase={fase} setFase={setFase}/>
+            <div className='px-44'>
             {fase == 1 &&
                 <Fase1 setFase={setFase} clientId={clientId} setClientId={setClientId} />}
             {fase == 2 &&
-                <Fase2 setFase={setFase} />}
+                <Fase2 setFase={setFase} clientId={clientId} />}
             {fase == 3 &&
                 <Fase3 setFase={setFase} lang={lang} setLang={setLang} setIsExchange={setIsExchange} />}
             {fase == 4 &&
@@ -76,6 +79,8 @@ const CrearPropuesta: FC<CrearPropuestaProps> = ({}) => {
                 <Fase6 setFase={setFase} descuento={descuento} setDescuento={setDescuento} precioTotal={precioTotal} setPrecioTotal={setPrecioTotal}/>}
             {fase == 7 &&
                 <Fase7 />}
+            </div>
+            
         </div>
     );
 };

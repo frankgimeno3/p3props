@@ -35,7 +35,7 @@ const Fase4: FC<Fase4Props> = ({ setFase, itemsArray, setItemsArray }) => {
   };
 
   return (
-    <div>
+    <div className='flex flex-col'>
       <p>¿Qué productos deseas agregar a la propuesta?</p>
       {options.map((option, index) => (
         <div key={index}>
