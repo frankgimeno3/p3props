@@ -1,8 +1,11 @@
 import React, { FC, useState } from 'react';
 
-interface Fase2Props {}
+interface Fase2Props {
+  setFase: (fase: number) => void;
 
-const Fase2: FC<Fase2Props> = () => {
+}
+
+const Fase2: FC<Fase2Props> = ({setFase}) => {
   const [formData, setFormData] = useState({
     companyName: '',
     crmCode: '',
@@ -19,6 +22,9 @@ const Fase2: FC<Fase2Props> = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  const handleFaseChange = (nextfase: number) => {
+    setFase(nextfase);
+   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -121,7 +127,8 @@ const Fase2: FC<Fase2Props> = () => {
           />
         </div>
         <div>
-          <button type="submit">Continuar</button>
+           <button type="submit"onClick={()=>{handleFaseChange(2)}}>Continuar</button>
+
         </div>
       </form>
     </div>

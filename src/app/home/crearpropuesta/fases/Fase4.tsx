@@ -1,10 +1,12 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
-interface Fase4Props {}
+interface Fase4Props {
+  setFase: (fase: number) => void;
+  itemsArray: string[];
+  setItemsArray: React.Dispatch<React.SetStateAction<string[] | []>>;
+}
 
-const Fase4: FC<Fase4Props> = () => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-
+const Fase4: FC<Fase4Props> = ({ setFase, itemsArray, setItemsArray }) => {
   const options = [
     'revista ventanas-puertas españa',
     'revista ventanas-puertas latam',
@@ -17,7 +19,7 @@ const Fase4: FC<Fase4Props> = () => {
   ];
 
   const handleCheckboxChange = (option: string) => {
-    setSelectedOptions((prev) =>
+    setItemsArray((prev: string[]) =>
       prev.includes(option)
         ? prev.filter((item) => item !== option)
         : [...prev, option]
@@ -25,8 +27,11 @@ const Fase4: FC<Fase4Props> = () => {
   };
 
   const handleContinue = () => {
-    console.log('Selected options:', selectedOptions);
-    // Aquí puedes manejar lo que ocurre al presionar el botón "Continuar"
+    console.log('Selected options:', itemsArray);
+  };
+
+  const handleFaseChange = (nextfase: number) => {
+    setFase(nextfase);
   };
 
   return (
@@ -38,7 +43,7 @@ const Fase4: FC<Fase4Props> = () => {
             <input
               type="checkbox"
               value={option}
-              checked={selectedOptions.includes(option)}
+              checked={itemsArray.includes(option)}
               onChange={() => handleCheckboxChange(option)}
             />
             {option}

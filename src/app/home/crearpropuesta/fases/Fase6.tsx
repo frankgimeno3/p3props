@@ -1,14 +1,17 @@
 import React, { FC, useState } from 'react';
 
 interface Fase6Props {
+  setFase: (fase: number) => void;
+  descuento: number;
+  setDescuento:React.Dispatch<React.SetStateAction<number>>;
   precioTotal: number;
+  setPrecioTotal:React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Fase6: FC<Fase6Props> = ({ precioTotal }) => {
+const Fase6: FC<Fase6Props> = ({setFase, descuento, setDescuento, precioTotal, setPrecioTotal }) => {
   const [isDescuentoVisible, setIsDescuentoVisible] = useState(false);
   const [isImpuestoVisible, setIsImpuestoVisible] = useState(false);
   const [descuentoTipo, setDescuentoTipo] = useState<'%' | 'numero'>('%' as 'numero');
-  const [descuento, setDescuento] = useState<number>(0);
   const [impuesto, setImpuesto] = useState<number>(0);
 
   const handleDescuentoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +35,10 @@ const Fase6: FC<Fase6Props> = ({ precioTotal }) => {
   };
 
   const precioFinal = precioTotal - calcularDescuento() + calcularImpuesto();
+
+   const handleFaseChange = (nextfase: number) => {
+    setFase(nextfase);
+   };
 
   return (
     <div className="flex flex-col space-y-6">

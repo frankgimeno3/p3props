@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 
 interface Fase3Props {
+    setFase: (fase: number) => void;
+    lang: string;
     setLang: (lang: string) => void;
     setIsExchange: (isExchange: boolean) => void;
 }
 
-const Fase3: FC<Fase3Props> = ({ setLang, setIsExchange }) => {
+const Fase3: FC<Fase3Props> = ({ setFase, setLang, setIsExchange }) => {
     const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setLang(event.target.value);  
     };
@@ -14,6 +16,9 @@ const Fase3: FC<Fase3Props> = ({ setLang, setIsExchange }) => {
         setIsExchange(event.target.value === "true");  
     };
 
+     const handleFaseChange = (nextfase: number) => {
+        setFase(nextfase);
+       };
     return (
         <div>
             <label>
@@ -30,7 +35,8 @@ const Fase3: FC<Fase3Props> = ({ setLang, setIsExchange }) => {
                     <option value="false">No</option>
                 </select>
             </label>
-            <button type="button">Continuar</button>  
+             <button type="button"onClick={()=>{handleFaseChange(2)}}>Continuar</button>
+
         </div>
     );
 };

@@ -5,6 +5,7 @@ interface Fase7Props {
 }
 
 const Fase7: FC<Fase7Props> = ({ }) => {
+
   return (
     <div>
         <p>Propuesta creada... </p>
