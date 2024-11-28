@@ -139,7 +139,7 @@ const Fase2: FC<Fase2Props> = ({ setFase, clientId }) => {
         <div className='text-center pt-5'>
         <button
           type="submit"
-          onClick={() => { handleFaseChange(2) }}
+          onClick={() => { handleFaseChange(3) }}
           className={`h-9   w-36 rounded-lg text-sm ${isFormValid ? 'bg-gray-300 text-gray-800' : 'bg-gray-500 text-gray-800'}`}
           disabled={!isFormValid}
         >

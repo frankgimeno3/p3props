@@ -113,7 +113,7 @@ const Fase5: FC<Fase5Props> = ({ setFase, isExchange, itemsArray, setItemsArray 
       {/* Botón Continuar */}
       <div className="mt-6 text-center">
         <button
-          onClick={handleContinue}
+          onClick={()=>{handleFaseChange(6)}}
           className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
         >
           Continuar

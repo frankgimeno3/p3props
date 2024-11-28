@@ -35,7 +35,7 @@ const Fase3: FC<Fase3Props> = ({ setFase, setLang, setIsExchange }) => {
                     <option value="false">No</option>
                 </select>
             </label>
-             <button type="button"onClick={()=>{handleFaseChange(2)}}>Continuar</button>
+             <button type="button" onClick={()=>{handleFaseChange(4)}}>Continuar</button>
 
         </div>
     );

@@ -50,7 +50,7 @@ const Fase4: FC<Fase4Props> = ({ setFase, itemsArray, setItemsArray }) => {
           </label>
         </div>
       ))}
-      <button onClick={handleContinue}>Continuar</button>
+      <button onClick={()=>{handleFaseChange(5)}}>Continuar</button>
     </div>
   );
 };

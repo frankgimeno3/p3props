@@ -107,6 +107,14 @@ const Fase6: FC<Fase6Props> = ({setFase, descuento, setDescuento, precioTotal, s
       <div className="text-4xl font-bold mt-6 text-center">
         Precio Final: ${precioFinal.toFixed(2)}
       </div>
+      <div className="mt-6 text-center">
+        <button
+          onClick={()=>{handleFaseChange(7)}}
+          className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+        >
+          Continuar
+        </button>
+      </div>
     </div>
   );
 };
