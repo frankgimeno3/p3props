@@ -65,7 +65,7 @@ const CrearPropuesta: FC<CrearPropuestaProps> = ({}) => {
             {fase == 2 &&
                 <Fase2 setFase={setFase} clientId={clientId} />}
             {fase == 3 &&
-                <Fase3 setFase={setFase} lang={lang} setLang={setLang} setIsExchange={setIsExchange} />}
+                <Fase3 setFase={setFase} lang={lang} setLang={setLang} isExchange={isExchange} setIsExchange={setIsExchange} />}
             {fase == 4 &&
                 <Fase4 setFase={setFase} itemsArray={itemsArray} setItemsArray={setItemsArray} />}
             {fase == 5 &&
