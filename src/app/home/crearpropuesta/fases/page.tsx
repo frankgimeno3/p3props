@@ -1,7 +1,7 @@
-"use client"
+"use client";
 import React, { FC, useState } from 'react';
 import { addPropuesta, Product } from '@/lib/propuestas/addPropuesta';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useFormStatus } from 'react-dom';
 // import { Button } from '@/app/auth/signup/button';
 import Fase1 from './Fase1';
 import Fase2 from './Fase2';
@@ -19,16 +19,18 @@ const CrearPropuesta: FC<CrearPropuestaProps> = ({}) => {
 
     const [fase, setFase] = useState(1);
     const [lang, setLang] = useState("es");
+    const [companyName, setCompanyName] = useState("");
     const [isExchange, setIsExchange] = useState(false);
     const [clientId, setClientId] = useState("");
-    const [descuento, setDescuento] = useState(0);
+    const [descuentoFinal, setDescuentoFinal] = useState(0);
     const [impuesto, setImpuesto] = useState("");
     const [numeroAgente, setNumeroAgente] = useState("");
     const [itemsArray, setItemsArray] = useState<string[]>([]);
     const [precioTotal, setPrecioTotal] = useState(0);
+    const [precioFinal, setPrecioFinal] = useState(0);
 
     // Nuevo estado para conceptos
-    const [conceptos, setConceptos] = useState<{ concepto: string; precio: string; descuento: string }[]>([]);
+    const [conceptos, setConceptos] = useState<{ concepto: string; precioTarifa: number; descuento: number; precioUnitario: number }[]>([]);
 
     const [products, setProducts] = useState<Product[]>([]);
 
@@ -50,37 +52,53 @@ const CrearPropuesta: FC<CrearPropuestaProps> = ({}) => {
         const formData = new FormData(event.currentTarget);
 
         try {
-            await addPropuesta(lang, clientId, products, descuento, impuesto, numeroAgente);
+            await addPropuesta(lang, clientId, products, descuentoFinal, impuesto, numeroAgente);
         } catch (error) {
             console.error("Error al crear la propuesta:", error);
         }
     };
 
     return (
-        <div className='flex flex-col   min-h-screen' style={{ backgroundColor: "#0f0f10" }}>
-            <FasesNav fase={fase} setFase={setFase}/>
-            <div className='px-44'>
-            {fase == 1 &&
-                <Fase1 setFase={setFase} clientId={clientId} setClientId={setClientId} />}
-            {fase == 2 &&
-                <Fase2 setFase={setFase} clientId={clientId} />}
-            {fase == 3 &&
-                <Fase3 setFase={setFase} lang={lang} setLang={setLang} isExchange={isExchange} setIsExchange={setIsExchange} />}
-            {fase == 4 &&
-                <Fase4 setFase={setFase} itemsArray={itemsArray} setItemsArray={setItemsArray} />}
-            {fase == 5 &&
-                <Fase5 
-                    setFase={setFase} 
-                    isExchange={isExchange} 
-                    itemsArray={itemsArray} 
-                    setItemsArray={setItemsArray} 
-                 />}
-            {fase == 6 &&
-                <Fase6 setFase={setFase} descuento={descuento} setDescuento={setDescuento} precioTotal={precioTotal} setPrecioTotal={setPrecioTotal}/>}
-            {fase == 7 &&
-                <Fase7 />}
+        <div className="flex flex-col min-h-screen" style={{ backgroundColor: "#0f0f10" }}>
+            <FasesNav fase={fase} setFase={setFase} />
+            <div className="px-44">
+                {fase == 1 && <Fase1 setFase={setFase} clientId={clientId} setClientId={setClientId} />}
+                {fase == 2 && <Fase2 setFase={setFase} clientId={clientId} setCompanyName={setCompanyName} />}
+                {fase == 3 && (
+                    <Fase3
+                        setFase={setFase}
+                        lang={lang}
+                        setLang={setLang}
+                        isExchange={isExchange}
+                        setIsExchange={setIsExchange}
+                        companyName={companyName}
+                    />
+                )}
+                {fase == 4 && <Fase4 setFase={setFase} itemsArray={itemsArray} setItemsArray={setItemsArray} />}
+                {fase == 5 && (
+                    <Fase5
+                        setFase={setFase}
+                        isExchange={isExchange}
+                        itemsArray={itemsArray}
+                        setItemsArray={setItemsArray}
+                        precioTotal={precioTotal}
+                        setPrecioTotal={setPrecioTotal}
+                        conceptos={conceptos} // Pasamos conceptos como prop
+                        setConceptos={setConceptos} // Pasamos setConceptos como prop
+                    />
+                )}
+                {fase == 6 && (
+                    <Fase6
+                        setFase={setFase}
+                        descuentoFinal={descuentoFinal}
+                        setDescuentoFinal={setDescuentoFinal}
+                        precioTotal={precioTotal}
+                        precioFinal={precioFinal}
+                        setPrecioFinal={setPrecioFinal}
+                    />
+                )}
+                {fase == 7 && <Fase7 />}
             </div>
-            
         </div>
     );
 };

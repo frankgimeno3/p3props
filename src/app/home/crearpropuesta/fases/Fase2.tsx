@@ -3,9 +3,10 @@ import React, { FC, useState } from 'react';
 interface Fase2Props {
   setFase: (fase: number) => void;
   clientId: string;
+  setCompanyName: (companyName: string) => void;
 }
 
-const Fase2: FC<Fase2Props> = ({ setFase, clientId }) => {
+const Fase2: FC<Fase2Props> = ({ setFase, clientId, setCompanyName }) => {
   const [formData, setFormData] = useState({
     companyName: '',
     clientId: clientId,
@@ -21,6 +22,7 @@ const Fase2: FC<Fase2Props> = ({ setFase, clientId }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setCompanyName(formData.companyName)
   };
 
   const handleFaseChange = (nextfase: number) => {

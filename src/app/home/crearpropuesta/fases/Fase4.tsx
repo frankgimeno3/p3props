@@ -26,17 +26,16 @@ const Fase4: FC<Fase4Props> = ({ setFase, itemsArray, setItemsArray }) => {
     );
   };
 
-  const handleContinue = () => {
-    console.log('Selected options:', itemsArray);
+  const handleFaseChange = (nextFase: number) => {
+    setFase(nextFase);
   };
 
-  const handleFaseChange = (nextfase: number) => {
-    setFase(nextfase);
-  };
+  // Verificar si hay al menos un checkbox seleccionado
+  const isFormValid = itemsArray.length > 0;
 
   return (
-    <div className='flex flex-col'>
-      <p>¿Qué productos deseas agregar a la propuesta?</p>
+    <div className="flex flex-col my-24">
+      <p className="text-2xl pb-5">¿Qué productos deseas agregar a la propuesta?</p>
       {options.map((option, index) => (
         <div key={index}>
           <label>
@@ -50,7 +49,18 @@ const Fase4: FC<Fase4Props> = ({ setFase, itemsArray, setItemsArray }) => {
           </label>
         </div>
       ))}
-      <button onClick={()=>{handleFaseChange(5)}}>Continuar</button>
+      <div className="text-center pt-5">
+        <button
+          type="submit"
+          onClick={() => handleFaseChange(5)}
+          className={`h-9 w-36 rounded-lg text-sm ${
+            isFormValid ? 'bg-gray-300 text-gray-800' : 'bg-gray-500 text-gray-800'
+          }`}
+          disabled={!isFormValid}
+        >
+          Continuar
+        </button>
+      </div>
     </div>
   );
 };

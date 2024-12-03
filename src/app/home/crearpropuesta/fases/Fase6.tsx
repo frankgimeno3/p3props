@@ -1,121 +1,130 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import Fase6Descuento from './Fase6-descuento';
+import Fase6Impuesto from './Fase6Impuesto';
 
 interface Fase6Props {
   setFase: (fase: number) => void;
-  descuento: number;
-  setDescuento:React.Dispatch<React.SetStateAction<number>>;
+  descuentoFinal: number;
+  setDescuentoFinal: React.Dispatch<React.SetStateAction<number>>;
   precioTotal: number;
-  setPrecioTotal:React.Dispatch<React.SetStateAction<number>>;
+  precioFinal: number;
+  setPrecioFinal: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Fase6: FC<Fase6Props> = ({setFase, descuento, setDescuento, precioTotal, setPrecioTotal }) => {
-  const [isDescuentoVisible, setIsDescuentoVisible] = useState(false);
-  const [isImpuestoVisible, setIsImpuestoVisible] = useState(false);
-  const [descuentoTipo, setDescuentoTipo] = useState<'%' | 'numero'>('%' as 'numero');
-  const [impuesto, setImpuesto] = useState<number>(0);
+const Fase6: FC<Fase6Props> = ({ setFase, descuentoFinal, setDescuentoFinal, precioTotal, precioFinal, setPrecioFinal }) => {
+  const [isDiscountSelected, setIsDiscountSelected] = useState(false)
+  const [isImpuestoSelected, setIsImpuestoSelected] = useState(false)
+  const [descuentoTipo, setDescuentoTipo] = useState('%')
 
-  const handleDescuentoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    setDescuento(value);
-  };
 
-  const handleDescuentoTipoChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setDescuentoTipo(e.target.value as '%' | 'numero');
-  };
-
-  const calcularDescuento = () => {
-    if (descuentoTipo === '%') {
-      return (precioTotal * descuento) / 100;
+  useEffect(() => {
+    if (isDiscountSelected == false) {
+      setDescuentoFinal(0) //esto es lo que cambia
+      if (isImpuestoSelected == false) {
+        setPrecioFinal(precioTotal - descuentoFinal)
+      }
+      if (isImpuestoSelected == true) { setPrecioFinal((precioTotal - descuentoFinal) * (1.21)) }
+    } else {
+      if (isImpuestoSelected == false) {
+        setPrecioFinal(precioTotal - descuentoFinal)
+      }
+      if (isImpuestoSelected == true) { setPrecioFinal((precioTotal - descuentoFinal) * (1.21)) }
     }
-    return descuento;
-  };
+  }, [precioTotal, descuentoFinal, isDiscountSelected, descuentoTipo, isImpuestoSelected]);
 
-  const calcularImpuesto = () => {
-    return isImpuestoVisible ? (precioTotal * 0.21) : 0;
-  };
-
-  const precioFinal = precioTotal - calcularDescuento() + calcularImpuesto();
-
-   const handleFaseChange = (nextfase: number) => {
+  const handleUnselect = (element: string, state: boolean) => {
+    if (element == 'descuento') {
+      if (state == true) {
+        setIsDiscountSelected(true)
+      } else {
+        setDescuentoFinal(0)
+        setIsDiscountSelected(false)
+      }
+    }
+    if (element == 'impuesto') {
+      if (state == true) {
+        setIsImpuestoSelected(true)
+      } else {
+        setIsImpuestoSelected(false)
+      }
+    }
+  }
+  const handleFaseChange = (nextfase: number) => {
     setFase(nextfase);
-   };
+  };
 
   return (
-    <div className="flex flex-col space-y-6">
-      {/* Precio Total y botón ver desagregado */}
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold">Precio Total: ${precioTotal.toFixed(2)}</h2>
-        <button
-          onClick={() => setIsDescuentoVisible(!isDescuentoVisible)}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-        >
-          {isDescuentoVisible ? 'Ocultar Desagregado' : 'Ver Desagregado'}
-        </button>
-      </div>
+    <div className="flex flex-col my-24">
+      {/* Precio Total */}
+      <h2 className="text-xl font-bold">Precio Total: €{precioTotal.toFixed(2)}</h2>
 
       {/* Descuento */}
-      {isDescuentoVisible && (
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center space-x-4">
-            <input
-              type="checkbox"
-              onChange={() => setIsDescuentoVisible(!isDescuentoVisible)}
-              id="descuento"
-              className="h-5 w-5"
-            />
-            <label htmlFor="descuento" className="text-lg">Descuento?</label>
-          </div>
-          {isDescuentoVisible && (
-            <div className="flex items-center space-x-4">
-              <select
-                value={descuentoTipo}
-                onChange={handleDescuentoTipoChange}
-                className="p-2 border border-gray-300 rounded"
-              >
-                <option value="%">%</option>
-                <option value="numero">Número</option>
-              </select>
-              <input
-                type="number"
-                value={descuento}
-                onChange={handleDescuentoChange}
-                className="p-2 border border-gray-300 rounded w-24"
-                placeholder={descuentoTipo === '%' ? 'Porcentaje' : 'Cantidad'}
-              />
-            </div>
-          )}
+      <div className="flex flex-col mt-4 text-gray-500">
+        <div className='flex flex-row items-center'>
+          <p className='text-white'>Aplicar un descuento general?</p>
+          {isDiscountSelected &&
+            <>
+              <button className='px-2 rounded px-2 bg-gray-100 w-10 h-5 text-xs text-gray-700 ml-8'
+                onClick={() => { handleUnselect('descuento', true) }}>Sí</button>
+              <button className='px-2 rounded px-2 bg-gray-400 w-10 h-5 text-xs text-gray-700 ml-1'
+                onClick={() => { handleUnselect('descuento', false) }}>No</button>
+            </>
+          }
+          {!isDiscountSelected &&
+            <>
+              <button className='px-2 rounded px-2 bg-gray-400 w-10 h-5 text-xs text-gray-700 ml-8'
+                onClick={() => { handleUnselect('descuento', true) }}>Sí</button>
+              <button className='px-2 rounded px-2 bg-gray-100 w-10 h-5 text-xs text-gray-700 ml-1'
+                onClick={() => { handleUnselect('descuento', false) }}>No</button>
+            </>}
         </div>
-      )}
+
+        {isDiscountSelected &&
+          <Fase6Descuento descuentoFinal={descuentoFinal} setDescuentoFinal={setDescuentoFinal} precioTotal={precioTotal}
+            descuentoTipo={descuentoTipo} setDescuentoTipo={setDescuentoTipo} />
+        }
+      </div>
 
       {/* Impuesto */}
-      <div className="flex items-center space-x-4">
-        <input
-          type="checkbox"
-          onChange={() => setIsImpuestoVisible(!isImpuestoVisible)}
-          id="impuesto"
-          className="h-5 w-5"
-        />
-        <label htmlFor="impuesto" className="text-lg">Impuesto?</label>
-        {isImpuestoVisible && (
-          <div className="ml-4 text-lg font-semibold">
-            ${calcularImpuesto().toFixed(2)}
-          </div>
-        )}
+      <div className="flex flex-col mt-4 text-gray-500">
+        <div className='flex flex-row items-center'>
+          <p className='text-white'>Aplicar un impuesto?</p>
+          {isImpuestoSelected &&
+            <>
+              <button className='px-2 rounded px-2 bg-gray-100 w-10 h-5 text-xs text-gray-700 ml-8'
+                onClick={() => handleUnselect('impuesto', true)}>Sí</button>
+              <button className='px-2 rounded px-2 bg-gray-400 w-10 h-5 text-xs text-gray-700 ml-1'
+                onClick={() => handleUnselect('impuesto', false)}>No</button>
+            </>}
+          {!isImpuestoSelected &&
+            <>
+              <button className='px-2 rounded px-2 bg-gray-400 w-10 h-5 text-xs text-gray-700 ml-8'
+                onClick={() => handleUnselect('impuesto', true)}>Sí</button>
+              <button className='px-2 rounded px-2 bg-gray-100 w-10 h-5 text-xs text-gray-700 ml-1'
+                onClick={() => handleUnselect('impuesto', false)}>No</button>
+            </>}
+        </div>
+
+        {isImpuestoSelected &&
+          <Fase6Impuesto precioTotal={precioTotal} />
+        }
       </div>
 
       {/* Precio Final */}
       <div className="text-4xl font-bold mt-6 text-center">
-        Precio Final: ${precioFinal.toFixed(2)}
+        Precio Final : €{precioFinal.toFixed(2)}
+        {isImpuestoSelected && <span className='text-xs mx-2'>(iva incluido)</span>}
       </div>
       <div className="mt-6 text-center">
         <button
-          onClick={()=>{handleFaseChange(7)}}
+          onClick={() => handleFaseChange(7)}
           className="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
         >
           Continuar
         </button>
       </div>
     </div>
+
   );
 };
 

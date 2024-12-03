@@ -50,6 +50,7 @@ const Fase1: FC<Fase1Props> = ({ setFase, clientId, setClientId }) => {
           Continuar
         </button>
       </div>
+      
     </div>
   );
 };
